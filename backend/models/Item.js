@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const itemSchema = new mongoose.Schem({
+const itemSchema = new mongoose.Schema({
     name: {type: String, required: true, unique: true},
     category: {type: String}, //beer, juice, snack, sweets, etc.
     quantity: {type: Number},
