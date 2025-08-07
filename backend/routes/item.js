@@ -29,6 +29,26 @@ router.get('/', async (req, res) => {
 });
 
 // get one: GET /items/:id
+router.get('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const item = await Item.findById(id);
+
+        if(!item) {
+            return res.status(404).json({
+                message: '🫢 Item not found'
+            });
+        }
+
+        res.status(200).json({
+            item: item
+        });
+    } catch (err) {
+        console.error('🫢 Error while retrieving item:', err);
+        res.status(500).json({ message: '❌ Internal error' });
+    }
+});
+
 
 // add new: POST /items
 router.post('/', async (req, res) => {
