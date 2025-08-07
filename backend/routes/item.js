@@ -84,7 +84,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     const { category, brand, flavour, container, alcoholPercentage, quantity } = req.body;
 
-    if(!category || !brand || !flavour || !container || !alcoholPercentage || !quantity) {
+    if(!category || !brand || !flavour || !container || alcoholPercentage === null || !quantity) {
         return res.status(400).json({
             message: '⛔ Fill all required fields!'
         });
