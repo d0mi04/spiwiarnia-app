@@ -115,6 +115,30 @@ router.put('/:id', async (req, res) => {
 });
 
 // delete: DELETE /items/:id
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
 
+    try {
+        const deletedItem = await Item.findById(id);
+
+        if(!deletedItem) {
+            return res.status(404).json({
+                message: '🫢 Item not found'
+            });
+        }
+
+        await deletedItem.deleteOne();
+
+        res.status(200).json({
+            message: '✅ Item removed', 
+            deletedItem: deletedItem 
+        });
+    } catch (err) {
+        console.error('❌ Error while updating item:', err);
+        res.status(500).json({ 
+            message: '❌ Internal error' 
+        });
+    }
+});
 
 module.exports = router;
