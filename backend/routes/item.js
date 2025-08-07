@@ -5,13 +5,28 @@ const router = express.Router();
 
 // get all: GET /iems & filtering /items?category=beer
 router.get('/', async (req, res) => {
-    const { category } = req.query;
-    let query = {};
+    const query = {};
 
     console.log('Parameters: ', req.query);
 
-    if(category) {
-        query.category = { $regex: new RegExp(category, 'i')};
+    // filter on any field:
+    const allowedFields = ['category', 'brand', 'flavour', 'container', 'alcoholPercentage', 'quantity', 'type'];
+
+    for(const field of allowedFields) {
+        const value = req.query[field];
+
+        if(value) {
+            // array of fields
+            if(Array.isArray(value)) {
+                query[field] = {
+                    $in: value.map(v => new RegExp(v, 'i'))
+                };
+            } else {
+                query[field] = {
+                    $regex: new RegExp(value, 'i')
+                };
+            }
+        }
     }
 
     try {
