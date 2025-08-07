@@ -5,9 +5,6 @@ const router = express.Router();
 
 // get all: GET /iems & filtering /items?category=beer
 router.get('/', async (req, res) => {
-    const sortBy = req.query.sortBy || 'category'; // default: sort by name
-    const order = req.query.order === 'desc' ? -1 : 1; // default: sort ascending
-
     const query = {};
 
     console.log('Parameters: ', req.query);
@@ -32,11 +29,22 @@ router.get('/', async (req, res) => {
         }
     }
 
+    // sorting and ordering
+    const sortBy = req.query.sortBy || 'category'; // default: sort by name
+    const order = req.query.order === 'desc' ? -1 : 1; // default: sort ascending
     const sortOptions = {};
     sortOptions[sortBy] = order;
 
+    // pagination:
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
     try {
-        const items = await Item.find(query).sort(sortOptions);
+        const items = await Item.find(query)
+            .sort(sortOptions)
+            .skip(skip)
+            .limit(limit);
 
         res.status(200).json({
             items
