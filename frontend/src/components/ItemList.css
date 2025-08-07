@@ -1,0 +1,13 @@
+.item-list {
+    padding: 1rem;
+}
+
+.filter-form {
+    margin-bottom: 2rem;
+}
+
+.item-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}

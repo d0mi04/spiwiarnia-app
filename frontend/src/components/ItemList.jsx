@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import ItemCard from "./ItemCard";
+import "./ItemList.css";
 
-function ItemList() {
+const ItemList = () => {
     const [items, setItems] = useState([]);
     const [filters, setFilters] = useState({
-        category: '',
-        brand: ''
+        category: "",
+        brand: "",
     });
     const [loading, setLoading] = useState(true);
 
@@ -14,8 +15,8 @@ function ItemList() {
 
         const query = new URLSearchParams();
 
-        if (filters.category) query.append('category', filters.category);
-        if (filters.brand) query.append('brand', filters.brand);
+        if (filters.category) query.append("category", filters.category);
+        if (filters.brand) query.append("brand", filters.brand);
 
         fetch(`/items?${query.toString()}`)
             .then(res => res.json())
@@ -24,7 +25,7 @@ function ItemList() {
                 setLoading(false);
             })
             .catch(err => {
-                console.error('Failed to fetch items:', err);
+                console.error("Failed to fetch items:", err);
                 setLoading(false);
             });
     };
@@ -43,8 +44,8 @@ function ItemList() {
     };
 
     return (
-        <div style={{ padding: '1rem' }}>
-            <form onSubmit={handleSubmit} style={{ marginBottom: '2rem'}}>
+        <div className="item-list">
+            <form onSubmit={handleSubmit} className="filter-form">
                 <label>
                     Category:{' '}
                     <input
@@ -73,7 +74,7 @@ function ItemList() {
             ) : items.length === 0 ? (
                 <p>No items found.</p>
             ) : (
-                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+                <div className="item-grid">
                     {items.map(item => (
                         <ItemCard key={item._id} item={item} />
                     ))}
