@@ -26,7 +26,7 @@ const NewItemForm = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch('/items', {
+            const response = await fetch(`/items`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

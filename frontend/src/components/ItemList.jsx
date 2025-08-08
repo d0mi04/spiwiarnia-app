@@ -21,7 +21,10 @@ const ItemList = () => {
         if (filters.category) query.append("category", filters.category);
         if (filters.brand) query.append("brand", filters.brand);
 
-        fetch(`/items?${query.toString()}`)
+        const queryString = query.toString();
+        const url = `/items${queryString ? `?${queryString}` : ''}`;
+
+        fetch(url)
             .then(res => res.json())
             .then(data => {
                 setItems(data.items);
