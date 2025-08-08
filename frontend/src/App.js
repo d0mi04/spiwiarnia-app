@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import ItemList from './components/ItemList';
-import NewItemForm from './components/NewItemForm';
 
 function App() {
   return (
@@ -11,7 +10,6 @@ function App() {
         <p>Inventory of your drinks</p>
       </header>
       <main>
-        <NewItemForm />
         <ItemList />
       </main>
     </div>

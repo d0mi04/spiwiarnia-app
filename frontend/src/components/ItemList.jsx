@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import Modal from "../modal/Modal";
 import ItemCard from "./ItemCard";
 import "./ItemList.css";
+import NewItemForm from "../pages/NewItemForm";
 
 const ItemList = () => {
     const [items, setItems] = useState([]);
@@ -9,6 +11,7 @@ const ItemList = () => {
         brand: "",
     });
     const [loading, setLoading] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const fetchItems = () => {
         setLoading(true);
@@ -44,7 +47,14 @@ const ItemList = () => {
     };
 
     return (
-        <div className="item-list">
+        <div className="item-list-container">
+            <div className="item-list-header">
+                <h1>Inventory</h1>
+                <button onClick={() => setIsModalOpen(true)} className="add-button">
+                    + Add New Item
+                </button>
+            </div>
+
             <form onSubmit={handleSubmit} className="filter-form">
                 <label>
                     Category:{' '}
@@ -80,6 +90,10 @@ const ItemList = () => {
                     ))}
                 </div>
             )}
+
+            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                <NewItemForm />
+            </Modal>
         </div>
     );
 }
