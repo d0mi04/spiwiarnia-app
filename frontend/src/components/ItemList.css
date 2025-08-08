@@ -1,0 +1,32 @@
+.item-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.add-button {
+    padding: 0.5rem 1rem;
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.add-button:hover {
+    background-color: #4338ca;
+}
+
+.filter-form {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.item-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
