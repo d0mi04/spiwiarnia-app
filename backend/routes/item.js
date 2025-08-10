@@ -3,7 +3,7 @@ const Item = require('../models/Item');
 
 const router = express.Router();
 
-// get all: GET /iems & filtering /items?category=beer
+// get all: GET /items & filtering /items?category=beer
 router.get('/', async (req, res) => {
     const query = {};
 
@@ -130,6 +130,65 @@ router.post('/', async (req, res) => {
         console.error('🫢 Error while creating item:', err);
         res.status(500).json({
             message: '❌ Internal error'
+        });
+    }
+});
+
+router.patch('/:id/decrement', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const item = await Item.findById(id);
+        if(!item) {
+            return res.status(404).json({
+                message: '🫢 Item not found'
+            });
+        }
+
+        if(item.quantity > 1) {
+            item.quantity -= 1;
+            await item.save();
+            return res.status(200).json({
+                message: '✅ Quantity decreased!',
+                item: item
+            });
+        } else {
+            await item.deleteOne();
+            return res.status(200).json({
+                message: '✅ Item removed (quantity reached 0)'
+            });
+        }
+
+    } catch (err) {
+        console.error('❌ Error while decrementing item:', err);
+        res.status(500).json({ 
+            message: '❌ Internal error' 
+        });
+    }
+});
+
+router.patch('/:id/increment', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const item = await Item.findById(id);
+        if(!item) {
+            return res.status(404).json({
+                message: '🫢 Item not found'
+            });
+        }
+
+        item.quantity += 1;
+        await item.save();
+        return res.status(200).json({
+            message: '✅ Quantity increased!',
+            item: item
+        });
+
+    } catch (err) {
+        console.error('❌ Error while incrementing item:', err);
+        res.status(500).json({ 
+            message: '❌ Internal error' 
         });
     }
 });
