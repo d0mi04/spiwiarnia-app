@@ -91,6 +91,26 @@ router.post('/', async (req, res) => {
     }
 
     try {
+        // checking if this product already exists:
+        const existingItem = await Item.findOne({
+            category: new RegExp(`^${category}$`, 'i'), 
+            brand: new RegExp(`^${brand}$`, 'i'),
+            flavour: new RegExp(`^${flavour}$`, 'i'),
+            container: new RegExp(`^${container}$`, 'i'),
+            alcoholPercentage: Number(alcoholPercentage)
+        });
+
+        if(existingItem) {
+            existingItem.quantity += quantity;
+            await existingItem.save();
+
+            return res.status(200).json({
+                message: '✅ Quantity updated!',
+                item: existingItem
+            });
+        }
+
+        // if product does not exists - create new one:
         const newItem = new Item({
             category,
             brand,
@@ -102,7 +122,7 @@ router.post('/', async (req, res) => {
 
         await newItem.save();
 
-        res.status(200).json({
+        res.status(201).json({
             message: '✅ new item has been added!',
             item: newItem
         });
