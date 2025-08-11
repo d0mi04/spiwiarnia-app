@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Modal from "../modal/Modal";
 import ItemList from "../components/ItemList";
 import NewItemForm from "../components/NewItemForm";
+import "./ItemsPage.css";
 
 const ItemsPage = () => {
     const [items, setItems] = useState([]);
