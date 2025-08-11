@@ -25,13 +25,20 @@ const NewItemForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // creating payload with conversion for numeric fields: 
+        const payload = {
+            ...formData,
+            quantity: Number(formData.quantity),
+            alcoholPercentage: Number(formData.alcoholPercentage)
+        };
+
         try {
             const response = await fetch(`/items`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(payload)
             });
 
             if(!response.ok) {

@@ -1,56 +1,66 @@
 import React, { useEffect, useState } from "react";
 import Modal from "../modal/Modal";
-import ItemCard from "./ItemCard";
-import "./ItemList.css";
-import NewItemForm from "./NewItemForm";
+import ItemList from "../components/ItemList";
+import NewItemForm from "../components/NewItemForm";
 
-const ItemList = () => {
+const ItemsPage = () => {
     const [items, setItems] = useState([]);
     const [filters, setFilters] = useState({
         category: "",
-        brand: "",
+        brand: ""
     });
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [message, setMessage] = useState("");
 
     const fetchItems = () => {
         setLoading(true);
 
         const query = new URLSearchParams();
-
-        if (filters.category) query.append("category", filters.category);
-        if (filters.brand) query.append("brand", filters.brand);
+        if(filters.category) query.append("category", filters.category);
+        if(filters.brand) query.append("brand", filters.brand);
 
         const queryString = query.toString();
-        const url = `/items${queryString ? `?${queryString}` : ''}`;
+        const url = `/items${queryString ? `?${queryString}` : ""}`;
 
         fetch(url)
-            .then(res => res.json())
-            .then(data => {
+            .then((res) => res.json())
+            .then((data) => {
                 setItems(data.items);
                 setLoading(false);
             })
-            .catch(err => {
+            .catch((err) => {
                 console.error("Failed to fetch items:", err);
                 setLoading(false);
             });
-    };
+    }
 
     useEffect(() => {
         fetchItems();
     }, []);
 
     const handleChange = (e) => {
-        setFilters({ ...filters, [e.target.name]: e.target.value });
+        setFilters({
+            ...filters,
+            [e.target.name]: e.target.value
+        });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmitFilters = (e) => {
         e.preventDefault();
         fetchItems();
     };
 
+    const handleItemAdded = () => {
+        setIsModalOpen(false);
+        setMessage("Added to the list!");
+        fetchItems();
+
+        setTimeout(() => setMessage(""), 3000);
+    };
+
     return (
-        <div className="item-list-container">
+        <div className="items-page">
             <div className="item-list-header">
                 <h1>Inventory</h1>
                 <button onClick={() => setIsModalOpen(true)} className="add-button">
@@ -58,7 +68,7 @@ const ItemList = () => {
                 </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="filter-form">
+            <form>
                 <label>
                     Category:{' '}
                     <input
@@ -66,12 +76,12 @@ const ItemList = () => {
                         name="category"
                         value={filters.category}
                         onChange={handleChange}
-                        placeholder="e.g. beer"
+                        placeholder="e.g. piwo"
                     />
                 </label>{' '}
                 <label>
                     Brand:{' '}
-                    <input 
+                    <input
                         type="text"
                         name="brand"
                         value={filters.brand}
@@ -82,23 +92,21 @@ const ItemList = () => {
                 <button type="submit">Filter</button>
             </form>
 
+            {message && <p className="success-message">{message}</p>}
+
             {loading ? (
                 <p>Loading items...</p>
             ) : items.length === 0 ? (
                 <p>No items found.</p>
             ) : (
-                <div className="item-grid">
-                    {items.map(item => (
-                        <ItemCard key={item._id} item={item} />
-                    ))}
-                </div>
+                <ItemList items={items} />
             )}
 
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                <NewItemForm />
+                <NewItemForm onItemAdded={handleItemAdded} />
             </Modal>
         </div>
     );
-}
+};
 
-export default ItemList;
+export default ItemsPage;
