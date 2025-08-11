@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import ItemList from './components/ItemList';
+import ItemsPage from './pages/ItemsPage';
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
         <p>Inventory of your drinks</p>
       </header>
       <main>
-        <ItemList />
+        <ItemsPage />
       </main>
     </div>
   );

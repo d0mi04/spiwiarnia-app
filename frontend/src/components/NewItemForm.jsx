@@ -1,6 +1,6 @@
 import React, { useState} from 'react';
 
-const NewItemForm = () => {
+const NewItemForm = ({ onItemAdded }) => {
     const [formData, setFormData] = useState({
         category: '',
         brand: '',
@@ -25,13 +25,20 @@ const NewItemForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // creating payload with conversion for numeric fields: 
+        const payload = {
+            ...formData,
+            quantity: Number(formData.quantity),
+            alcoholPercentage: Number(formData.alcoholPercentage)
+        };
+
         try {
             const response = await fetch(`/items`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(payload)
             });
 
             if(!response.ok) {
@@ -49,6 +56,8 @@ const NewItemForm = () => {
                 quantity: '',
                 type: ''
             });
+
+            onItemAdded(); // closing modal and refresh list
         } catch (err) {
             setError(err.message);
             setMessage('');
