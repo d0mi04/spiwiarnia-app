@@ -68,7 +68,7 @@ const ItemsPage = () => {
                 </button>
             </div>
 
-            <form>
+            <form onSubmit={handleSubmitFilters} className="filter-form">
                 <label>
                     Category:{' '}
                     <input
