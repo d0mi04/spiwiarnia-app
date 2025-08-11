@@ -7,7 +7,8 @@ const ItemsPage = () => {
     const [items, setItems] = useState([]);
     const [filters, setFilters] = useState({
         category: "",
-        brand: ""
+        brand: "",
+        flavour: ""
     });
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,6 +20,7 @@ const ItemsPage = () => {
         const query = new URLSearchParams();
         if(filters.category) query.append("category", filters.category);
         if(filters.brand) query.append("brand", filters.brand);
+        if(filters.flavour) query.append("flavour", filters.flavour);
 
         const queryString = query.toString();
         const url = `/items${queryString ? `?${queryString}` : ""}`;
@@ -87,6 +89,16 @@ const ItemsPage = () => {
                         value={filters.brand}
                         onChange={handleChange}
                         placeholder="e.g. Somersby"
+                    />
+                </label>{' '}
+                <label>
+                    Flavour:{' '}
+                    <input
+                        type="text"
+                        name="flavour"
+                        value={filters.flavour}
+                        onChange={handleChange}
+                        placeholder="e.g. wiśnia"
                     />
                 </label>{' '}
                 <button type="submit">Filter</button>
