@@ -37,3 +37,31 @@ item-brand, item-flavour, item-container, item-alcohol, item-quantity, item-type
     color: #555;
     margin: 0.2rem 0;
 }
+
+.item-button {
+    position: absolute;
+    background-color: #f0f0f0;
+    border: none;
+    color: #333;
+    font-size: 1.2rem;
+    font-weight: bold;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.item-button:hover {
+    background-color: #ddd;
+}
+
+.item-button.minus {
+    top: 8px;
+    right: 8px;
+}
+
+.item-button.plus {
+    bottom: 8px;
+    right: 8px;
+}

@@ -62,6 +62,32 @@ const ItemsPage = () => {
         setTimeout(() => setMessage(""), 3000);
     };
 
+    const handleIncrement = async (id) => {
+        try {
+            const res = await fetch(`/items/${id}/increment`, {
+                method: 'PATCH'
+            });
+
+            if(!res.ok) throw new Error("Failed to increment item.");
+            fetchItems();
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const handleDecrement = async (id) => {
+        try {
+            const res = await fetch(`/items/${id}/decrement`, {
+                method: 'PATCH'
+            });
+
+            if(!res.ok) throw new Error("Failed to decrement item.");
+            fetchItems();
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
     return (
         <div className="items-page">
             <div className="item-list-header">
@@ -112,7 +138,11 @@ const ItemsPage = () => {
             ) : items.length === 0 ? (
                 <p>No items found.</p>
             ) : (
-                <ItemList items={items} />
+                <ItemList 
+                    items={items} 
+                    onIncrement={handleIncrement}
+                    onDecrement={handleDecrement}
+                />
             )}
 
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>

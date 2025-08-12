@@ -1,8 +1,9 @@
 import React from 'react';
 import './ItemCard.css';
 
-const ItemCard = ({ item }) => {
+const ItemCard = ({ item, onIncrement, onDecrement }) => {
     const {
+        _id,
         category, 
         brand,
         flavour,
@@ -14,6 +15,9 @@ const ItemCard = ({ item }) => {
 
     return (
         <div className='item-card'>
+            <button className='item-button.minus' onClick={() => onDecrement(_id)}>
+                -
+            </button>
             <h3>{category}</h3>
             <img 
                 src="/images/beer-image.jpg"
@@ -28,6 +32,10 @@ const ItemCard = ({ item }) => {
                 <p className='item-container'><strong>Container:</strong> {container}</p>
                 {type && <p className='item-type'><strong>Type:</strong> {type}</p>}
             </div>
+
+            <button className='item-button.plus' onClick={() => onIncrement(_id)}>
+                +
+            </button>
         </div>
     );
 };
