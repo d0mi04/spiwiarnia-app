@@ -15,7 +15,7 @@ const ItemCard = ({ item, onIncrement, onDecrement }) => {
 
     return (
         <div className='item-card'>
-            <button className='item-button.minus' onClick={() => onDecrement(_id)}>
+            <button className='item-button minus' onClick={() => onDecrement(_id)}>
                 -
             </button>
             <h3>{category}</h3>
@@ -33,7 +33,7 @@ const ItemCard = ({ item, onIncrement, onDecrement }) => {
                 {type && <p className='item-type'><strong>Type:</strong> {type}</p>}
             </div>
 
-            <button className='item-button.plus' onClick={() => onIncrement(_id)}>
+            <button className='item-button plus' onClick={() => onIncrement(_id)}>
                 +
             </button>
         </div>
