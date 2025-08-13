@@ -57,7 +57,7 @@ const NewItemForm = ({ onItemAdded }) => {
                 type: ''
             });
 
-            onItemAdded(); // closing modal and refresh list
+            onItemAdded();
         } catch (err) {
             setError(err.message);
             setMessage('');
