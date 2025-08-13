@@ -4,7 +4,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
     if(totalPages <= 1) return null;
 
     const pages = [];
-    for (let i = 1; i < totalPages; i++) {
+    for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
     }
 
@@ -14,20 +14,24 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
                 onClick={() => onPageChange(currentPage - 1)}
                 disabled={currentPage === 1}
             >
-                &laquo; Prev
+                &lt;
             </button>
 
             {pages.map((page) => (
-                <button>
+                <button
+                    key={page}
+                    onClick={() => onPageChange(page)}
+                    className={page === currentPage ? "active" : ""}
+                >
                     {page}
                 </button>
             ))}
 
             <button
-                onClick={() => currentPage + 1}
+                onClick={() => onPageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
             >
-                Next &raquo;
+                &gt;
             </button>
         </div>
     );

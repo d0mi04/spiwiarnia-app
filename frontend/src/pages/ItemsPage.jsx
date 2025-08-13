@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Modal from "../modal/Modal";
 import ItemList from "../components/ItemList";
 import NewItemForm from "../components/NewItemForm";
+import Pagination from "../components/Pagination";
 import "./ItemsPage.css";
 
 const ItemsPage = () => {
@@ -15,13 +16,21 @@ const ItemsPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [message, setMessage] = useState("");
 
+    const [page, setPage] = useState(1);
+    const [limit] = useState(10); // default
+    const [totalPages, setTotalPages] = useState(1);
+
     const fetchItems = () => {
         setLoading(true);
 
+        // building a query:
         const query = new URLSearchParams();
         if(filters.category) query.append("category", filters.category);
         if(filters.brand) query.append("brand", filters.brand);
         if(filters.flavour) query.append("flavour", filters.flavour);
+
+        query.append("page", page);
+        query.append("limit", limit);
 
         const queryString = query.toString();
         const url = `/items${queryString ? `?${queryString}` : ""}`;
@@ -30,6 +39,7 @@ const ItemsPage = () => {
             .then((res) => res.json())
             .then((data) => {
                 setItems(data.items);
+                setTotalPages(data.totalPages); // backend is returning this information
                 setLoading(false);
             })
             .catch((err) => {
@@ -40,7 +50,7 @@ const ItemsPage = () => {
 
     useEffect(() => {
         fetchItems();
-    }, []);
+    }, [page, filters]);
 
     const handleChange = (e) => {
         setFilters({
@@ -51,6 +61,7 @@ const ItemsPage = () => {
 
     const handleSubmitFilters = (e) => {
         e.preventDefault();
+        setPage(1); // afteru using filters needs to go back to page 1
         fetchItems();
     };
 
@@ -138,11 +149,18 @@ const ItemsPage = () => {
             ) : items.length === 0 ? (
                 <p>No items found.</p>
             ) : (
-                <ItemList 
-                    items={items} 
-                    onIncrement={handleIncrement}
-                    onDecrement={handleDecrement}
-                />
+                <>
+                    <ItemList 
+                        items={items} 
+                        onIncrement={handleIncrement}
+                        onDecrement={handleDecrement}
+                    />
+                    <Pagination
+                        currentPage={page}
+                        totalPages={totalPages}
+                        onPageChange={setPage}
+                    />
+                </>
             )}
 
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
