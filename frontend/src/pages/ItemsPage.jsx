@@ -50,6 +50,7 @@ const ItemsPage = () => {
 
     useEffect(() => {
         fetchItems();
+        window.scrollTo({ top: 0, behavior: "smooth" });
     }, [page, filters]);
 
     const handleChange = (e) => {
@@ -62,7 +63,6 @@ const ItemsPage = () => {
     const handleSubmitFilters = (e) => {
         e.preventDefault();
         setPage(1); // afteru using filters needs to go back to page 1
-        fetchItems();
     };
 
     const handleItemAdded = () => {

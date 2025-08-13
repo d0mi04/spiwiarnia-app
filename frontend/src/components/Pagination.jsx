@@ -23,6 +23,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
                     key={page}
                     onClick={() => onPageChange(page)}
                     className={page === currentPage ? "active" : ""}
+                    aria-current={page === currentPage ? "page" : undefined}
                 >
                     {page}
                 </button>
