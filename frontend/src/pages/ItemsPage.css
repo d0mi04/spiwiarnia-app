@@ -1,3 +1,105 @@
+.items-page {
+    padding: 20px;
+    max-width: 3000px;
+    margin: auto;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Header */
+.item-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.item-list-header h1 {
+    font-size: 1.8rem;
+    color: #2c3e50;
+}
+
+.add-button {
+    background: linear-gradient(135deg, #4cafef, #6dd5fa);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.add-button:hover {
+    background: linear-gradient(135deg, #3a8fd0, #58c1e0);
+    transform: translateY(-1px);
+}
+
+/* Filters */
+.filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+
+.filter-form input, .filter-form select {
+    font-family: 'Inter', sans-serif;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #dcdfe3;
+    font-size: 0.9rem;
+    outline: none;
+    background: white;
+    transition: border-color 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.filter-form input:focus, .filter-form select:focus {
+    border-color: #4cafef;
+    box-shadow: 0 3px 8px rgba(76,175,239,0.15);
+}
+
+/* removing default dropdown arrow */
+.filter-form select {
+    appearance: none;
+    background-color: white;
+    background-image: none;
+    position: relative;
+}
+
+.select-wrapper {
+    position: relative;
+    display: inline-block;
+    width: auto;
+}
+
+.select-wrapper select {
+    width: 100%;
+}
+
+.filter-form select:hover {
+    border-color: #4cafef;
+}
+
+.filter-button {
+    background: #4cafef;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.filter-button:hover {
+    background: #3a8fd0;
+}
+
 .success-message {
     position: fixed;
     top: 20px;
@@ -19,4 +121,16 @@
     10% { opacity: 1; transform: translate(-50%, 0); }
     90% { opacity: 1; }
     100% { opacity: 0; transform: translate(-50%, -20px); }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .filter-form {
+        flex-direction: column;
+    }
+
+    .add-button {
+        width: 50%;
+        margin-top: 10px;
+    }
 }

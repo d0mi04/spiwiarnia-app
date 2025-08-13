@@ -40,6 +40,9 @@ router.get('/', async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
 
+    const totalItems = await Item.countDocuments(query);
+    const totalPages = Math.ceil(totalItems / limit);
+
     try {
         const items = await Item.find(query)
             .sort(sortOptions)
@@ -47,7 +50,10 @@ router.get('/', async (req, res) => {
             .limit(limit);
 
         res.status(200).json({
-            items
+            items,
+            totalItems,
+            currentPage: page,
+            totalPages
         });
     } catch (err) {
         console.error('🫢 Error while retrieving items:', err);
