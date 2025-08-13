@@ -63,6 +63,28 @@
     box-shadow: 0 3px 8px rgba(76,175,239,0.15);
 }
 
+/* removing default dropdown arrow */
+.filter-form select {
+    appearance: none;
+    background-color: white;
+    background-image: none;
+    position: relative;
+}
+
+.select-wrapper {
+    position: relative;
+    display: inline-block;
+    width: auto;
+}
+
+.select-wrapper select {
+    width: 100%;
+}
+
+.filter-form select:hover {
+    border-color: #4cafef;
+}
+
 .filter-button {
     background: #4cafef;
     color: white;

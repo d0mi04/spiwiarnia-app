@@ -62,7 +62,7 @@ const ItemsPage = () => {
 
     const handleSubmitFilters = (e) => {
         e.preventDefault();
-        setPage(1); // afteru using filters needs to go back to page 1
+        setPage(1); // after using filters needs to go back to page 1
     };
 
     const handleItemAdded = () => {
@@ -141,18 +141,21 @@ const ItemsPage = () => {
                 </label>{' '}
                 <label>
                     Items per page:{' '}
-                    <select
-                        value={limit}
-                        onChange={(e) => {
-                            setLimit(Number(e.target.value));
-                            setPage(1); // after limit change, go back to 1. page
-                        }}
-                    >
-                        <option value={5}>5</option>
-                        <option value={10}>10</option>
-                        <option value={20}>20</option>
-                        <option value={50}>50</option>
-                    </select>
+                    <div className="select-wrapper">
+                        <select
+                            value={limit}
+                            onChange={(e) => {
+                                setLimit(Number(e.target.value));
+                                setPage(1); // after limit change, go back to 1. page
+                            }}
+                        >
+                            <option value={5}>5</option>
+                            <option value={10}>10</option>
+                            <option value={20}>20</option>
+                            <option value={50}>50</option>
+                        </select>
+                    </div>
+                    
                 </label>{' '}
                 <button type="submit" className="filter-button">Filter</button>
             </form>
