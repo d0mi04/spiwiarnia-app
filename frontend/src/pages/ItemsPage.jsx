@@ -17,7 +17,7 @@ const ItemsPage = () => {
     const [message, setMessage] = useState("");
 
     const [page, setPage] = useState(1);
-    const [limit] = useState(10); // default
+    const [limit, setLimit] = useState(10); // default
     const [totalPages, setTotalPages] = useState(1);
 
     const fetchItems = () => {
@@ -51,7 +51,7 @@ const ItemsPage = () => {
     useEffect(() => {
         fetchItems();
         window.scrollTo({ top: 0, behavior: "smooth" });
-    }, [page, filters]);
+    }, [page, filters, limit]);
 
     const handleChange = (e) => {
         setFilters({
@@ -138,6 +138,21 @@ const ItemsPage = () => {
                         onChange={handleChange}
                         placeholder="e.g. wiśnia"
                     />
+                </label>{' '}
+                <label>
+                    Items per page:{' '}
+                    <select
+                        value={limit}
+                        onChange={(e) => {
+                            setLimit(Number(e.target.value));
+                            setPage(1); // after limit change, go back to 1. page
+                        }}
+                    >
+                        <option value={5}>5</option>
+                        <option value={10}>10</option>
+                        <option value={20}>20</option>
+                        <option value={50}>50</option>
+                    </select>
                 </label>{' '}
                 <button type="submit">Filter</button>
             </form>
