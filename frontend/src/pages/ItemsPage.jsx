@@ -154,7 +154,7 @@ const ItemsPage = () => {
                         <option value={50}>50</option>
                     </select>
                 </label>{' '}
-                <button type="submit">Filter</button>
+                <button type="submit" className="filter-button">Filter</button>
             </form>
 
             {message && <p className="success-message">{message}</p>}
