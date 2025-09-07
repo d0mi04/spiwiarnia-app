@@ -50,7 +50,7 @@ const ItemsPage = () => {
 
     useEffect(() => {
         fetchItems();
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        // window.scrollTo({ top: 0, behavior: "smooth" });
     }, [page, filters, limit]);
 
     const handleChange = (e) => {
@@ -80,7 +80,13 @@ const ItemsPage = () => {
             });
 
             if(!res.ok) throw new Error("Failed to increment item.");
-            fetchItems();
+            const data = await res.json();
+
+            setItems((prevItems) =>
+                prevItems.map((item) =>
+                    item._id === id ? { ...item, ...data.item} : item
+                )
+            );
         } catch (err) {
             console.log(err);
         }
@@ -93,7 +99,19 @@ const ItemsPage = () => {
             });
 
             if(!res.ok) throw new Error("Failed to decrement item.");
-            fetchItems();
+            const data = await res.json();
+
+            if(data.item) {
+                setItems((prevItems) =>
+                    prevItems.map((item) =>
+                        item._id === id ? { ...item, ...data.item} : item
+                    )
+                );
+            } else {
+                setItems((prevItems) =>
+                    prevItems.filter((item) => item._id !== id)
+                );
+            }
         } catch (err) {
             console.log(err);
         }
