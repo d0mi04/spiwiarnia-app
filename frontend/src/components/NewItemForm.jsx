@@ -1,4 +1,5 @@
 import React, { useState} from 'react';
+import './NewItemForm.css';
 
 const NewItemForm = ({ onItemAdded }) => {
     const [formData, setFormData] = useState({
@@ -65,9 +66,9 @@ const NewItemForm = ({ onItemAdded }) => {
     };
 
     return (
-        <div style={{ maxWidth: '500px', margin: '2rem auto' }}>
+        <div className='new-item-form-container'>
             <h2>Add New Item</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className='new-item-form'>
                 <label>
                     Category:
                     <input
@@ -141,8 +142,8 @@ const NewItemForm = ({ onItemAdded }) => {
                 <button type="submit">Add Item</button>
             </form>
 
-            {message && <p style={{ color: 'green' }}>{message}</p>}
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {message && <p className='success-msg'>{message}</p>}
+            {error && <p className='eror-msg'>{error}</p>}
         </div>
     );
 };
