@@ -67,83 +67,94 @@ const NewItemForm = ({ onItemAdded }) => {
 
     return (
         <div className='new-item-form-container'>
-            <h2>Add New Item</h2>
-            <form onSubmit={handleSubmit} className='new-item-form'>
-                <label>
-                    Category:
-                    <input
-                        type="text"
-                        name="category"
-                        value={formData.category}
-                        onChange={handleChange}
-                        required
+            {formData.category && (
+                <div className='form-image-container'>
+                    <img 
+                        src='/images/beer-image.jpg'
+                        alt='Beer Image'
+                        className='form-header-image'
                     />
-                </label><br />
-                <label>
-                    Brand:
-                    <input
-                        type="text"
-                        name="brand"
-                        value={formData.brand}
-                        onChange={handleChange}
-                        required
-                    />
-                </label><br />
-                <label>
-                    Flavour:
-                    <input
-                        type="text"
-                        name="flavour"
-                        value={formData.flavour}
-                        onChange={handleChange}
-                        required
-                    />
-                </label><br />
-                <label>
-                    Container:
-                    <input
-                        type="text"
-                        name="container"
-                        value={formData.container}
-                        onChange={handleChange}
-                        required
-                    />
-                </label><br />
-                <label>
-                    Alcohol %:
-                    <input
-                        type="text"
-                        name="alcoholPercentage"
-                        value={formData.alcoholPercentage}
-                        onChange={handleChange}
-                        required
-                    />
-                </label><br />
-                <label>
-                    Quantity:
-                    <input
-                        type="text"
-                        name="quantity"
-                        value={formData.quantity}
-                        onChange={handleChange}
-                        required
-                    />
-                </label><br />
-                <label>
-                    Type (optional):
-                    <input
-                        type="text"
-                        name="type"
-                        value={formData.type}
-                        onChange={handleChange}
-                    />
-                </label><br />
+                </div>
+            )}
+            <div className='form-content'>
+                <h2>Add New Item</h2>
+                <form onSubmit={handleSubmit} className='new-item-form'>
+                    <label>
+                        Category:
+                        <input
+                            type="text"
+                            name="category"
+                            value={formData.category}
+                            onChange={handleChange}
+                            required
+                        />
+                    </label><br />
+                    <label>
+                        Brand:
+                        <input
+                            type="text"
+                            name="brand"
+                            value={formData.brand}
+                            onChange={handleChange}
+                            required
+                        />
+                    </label><br />
+                    <label>
+                        Flavour:
+                        <input
+                            type="text"
+                            name="flavour"
+                            value={formData.flavour}
+                            onChange={handleChange}
+                            required
+                        />
+                    </label><br />
+                    <label>
+                        Container:
+                        <input
+                            type="text"
+                            name="container"
+                            value={formData.container}
+                            onChange={handleChange}
+                            required
+                        />
+                    </label><br />
+                    <label>
+                        Alcohol %:
+                        <input
+                            type="text"
+                            name="alcoholPercentage"
+                            value={formData.alcoholPercentage}
+                            onChange={handleChange}
+                            required
+                        />
+                    </label><br />
+                    <label>
+                        Quantity:
+                        <input
+                            type="text"
+                            name="quantity"
+                            value={formData.quantity}
+                            onChange={handleChange}
+                            required
+                        />
+                    </label><br />
+                    <label>
+                        Type (optional):
+                        <input
+                            type="text"
+                            name="type"
+                            value={formData.type}
+                            onChange={handleChange}
+                        />
+                    </label><br />
 
-                <button type="submit">Add Item</button>
-            </form>
+                    <button type="submit">Add Item</button>
+                </form>
 
-            {message && <p className='success-msg'>{message}</p>}
-            {error && <p className='eror-msg'>{error}</p>}
+                {message && <p className='success-msg'>{message}</p>}
+                {error && <p className='eror-msg'>{error}</p>}
+            </div>
         </div>
     );
 };
