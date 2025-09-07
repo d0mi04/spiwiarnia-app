@@ -79,76 +79,61 @@ const NewItemForm = ({ onItemAdded }) => {
             <div className='form-content'>
                 <h2>Add New Item</h2>
                 <form onSubmit={handleSubmit} className='new-item-form'>
-                    <label>
-                        Category:
-                        <input
-                            type="text"
-                            name="category"
-                            value={formData.category}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label><br />
-                    <label>
-                        Brand:
-                        <input
-                            type="text"
-                            name="brand"
-                            value={formData.brand}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label><br />
-                    <label>
-                        Flavour:
-                        <input
-                            type="text"
-                            name="flavour"
-                            value={formData.flavour}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label><br />
-                    <label>
-                        Container:
-                        <input
-                            type="text"
-                            name="container"
-                            value={formData.container}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label><br />
-                    <label>
-                        Alcohol %:
-                        <input
-                            type="text"
-                            name="alcoholPercentage"
-                            value={formData.alcoholPercentage}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label><br />
-                    <label>
-                        Quantity:
-                        <input
-                            type="text"
-                            name="quantity"
-                            value={formData.quantity}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label><br />
-                    <label>
-                        Type (optional):
-                        <input
-                            type="text"
-                            name="type"
-                            value={formData.type}
-                            onChange={handleChange}
-                        />
-                    </label><br />
-
+                    <input
+                        type="text"
+                        name="category"
+                        value={formData.category}
+                        onChange={handleChange}
+                        placeholder='Category e.g. Piwo'
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="brand"
+                        value={formData.brand}
+                        onChange={handleChange}
+                        placeholder='Brand e.g. Somersby'
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="flavour"
+                        value={formData.flavour}
+                        onChange={handleChange}
+                        placeholder='Flavour e.g. Blackberry'
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="container"
+                        value={formData.container}
+                        onChange={handleChange}
+                        placeholder='Container e.g. butelka'
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="alcoholPercentage"
+                        value={formData.alcoholPercentage}
+                        onChange={handleChange}
+                        placeholder='Alkohol % e.g. 4.5'
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="quantity"
+                        value={formData.quantity}
+                        onChange={handleChange}
+                        placeholder='Quantity e.g. 4'
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="type"
+                        value={formData.type}
+                        onChange={handleChange}
+                        placeholder='Type (optional) e.g. semi-dry'
+                    />
                     <button type="submit">Add Item</button>
                 </form>
 

@@ -58,6 +58,11 @@
     transition: border 0.2s ease, box-shadow 0.2s ease;
 }
 
+.new-item-form input::placeholder {
+    color: #999;
+    font-size: 0.85rem;
+}
+
 .new-item-form input:focus {
     border: 1px solid #90caf9;
     box-shadow: 0 0 4px rgba(144, 202, 249, 0.4);
