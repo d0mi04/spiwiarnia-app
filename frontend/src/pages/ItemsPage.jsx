@@ -20,6 +20,10 @@ const ItemsPage = () => {
     const [limit, setLimit] = useState(10); // default
     const [totalPages, setTotalPages] = useState(1);
 
+    // sorting:
+    const [sortBy, setSortBy] = useState("category"); // default sorting by category  
+    const [sortOrder, setSortOrder] = useState("asc"); // default ascending
+
     const fetchItems = () => {
         setLoading(true);
 
@@ -31,6 +35,9 @@ const ItemsPage = () => {
 
         query.append("page", page);
         query.append("limit", limit);
+
+        query.append("sortBy", sortBy);
+        query.append("order", sortOrder);
 
         const queryString = query.toString();
         const url = `/items${queryString ? `?${queryString}` : ""}`;
@@ -51,7 +58,7 @@ const ItemsPage = () => {
     useEffect(() => {
         fetchItems();
         // window.scrollTo({ top: 0, behavior: "smooth" });
-    }, [page, filters, limit]);
+    }, [page, filters, limit, sortBy, sortOrder]);
 
     const handleChange = (e) => {
         setFilters({
@@ -82,11 +89,23 @@ const ItemsPage = () => {
             if(!res.ok) throw new Error("Failed to increment item.");
             const data = await res.json();
 
-            setItems((prevItems) =>
-                prevItems.map((item) =>
+            setItems((prevItems) => {
+                const updatedItems = prevItems.map((item) =>
                     item._id === id ? { ...item, ...data.item} : item
-                )
-            );
+                );
+
+                return [...updatedItems].sort((a, b) => {
+                    let valA = a[sortBy];
+                    let valB = b[sortBy];
+
+                    if(typeof valA === 'string') valA = valA.toLowerCase();
+                    if(typeof valB === 'string') valB = valB.toLowerCase();
+
+                    if(valA < valB) return sortOrder === 'asc' ? -1 : 1;
+                    if(valA > valB) return sortOrder === 'asc' ? 1 : -1;
+                    return 0;
+                });
+            });
         } catch (err) {
             console.log(err);
         }
@@ -102,11 +121,23 @@ const ItemsPage = () => {
             const data = await res.json();
 
             if(data.item) {
-                setItems((prevItems) =>
-                    prevItems.map((item) =>
-                        item._id === id ? { ...item, ...data.item} : item
-                    )
+                setItems((prevItems) => {
+                const updatedItems = prevItems.map((item) =>
+                    item._id === id ? { ...item, ...data.item} : item
                 );
+
+                return [...updatedItems].sort((a, b) => {
+                    let valA = a[sortBy];
+                    let valB = b[sortBy];
+
+                    if(typeof valA === 'string') valA = valA.toLowerCase();
+                    if(typeof valB === 'string') valB = valB.toLowerCase();
+
+                    if(valA < valB) return sortOrder === 'asc' ? -1 : 1;
+                    if(valA > valB) return sortOrder === 'asc' ? 1 : -1;
+                    return 0;
+                });
+            });
             } else {
                 setItems((prevItems) =>
                     prevItems.filter((item) => item._id !== id)
@@ -127,36 +158,40 @@ const ItemsPage = () => {
             </div>
 
             <form onSubmit={handleSubmitFilters} className="filter-form">
-                <label>
-                    Category:{' '}
-                    <input
-                        type="text"
-                        name="category"
-                        value={filters.category}
-                        onChange={handleChange}
-                        placeholder="e.g. piwo"
-                    />
-                </label>{' '}
-                <label>
-                    Brand:{' '}
-                    <input
-                        type="text"
-                        name="brand"
-                        value={filters.brand}
-                        onChange={handleChange}
-                        placeholder="e.g. Somersby"
-                    />
-                </label>{' '}
-                <label>
-                    Flavour:{' '}
-                    <input
-                        type="text"
-                        name="flavour"
-                        value={filters.flavour}
-                        onChange={handleChange}
-                        placeholder="e.g. wiśnia"
-                    />
-                </label>{' '}
+                <input
+                    type="text"
+                    name="category"
+                    value={filters.category}
+                    onChange={handleChange}
+                    placeholder="Category e.g. piwo"
+                />
+                <input
+                    type="text"
+                    name="brand"
+                    value={filters.brand}
+                    onChange={handleChange}
+                    placeholder="Brand e.g. Somersby"
+                />
+                <input
+                    type="text"
+                    name="flavour"
+                    value={filters.flavour}
+                    onChange={handleChange}
+                    placeholder="Flavour e.g. wiśnia"
+                />
+
+                {/* sorting: */}
+                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                    <option value="quantity">Sort by Quantity</option>
+                    <option value="brand">Sort by Brand</option>
+                    <option value="category">Sort by Category</option>
+                </select>
+
+                <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+                    <option value="asc">Ascending</option>
+                    <option value="desc">Descending</option>
+                </select>
+
                 <label>
                     Items per page:{' '}
                     <div className="select-wrapper">
