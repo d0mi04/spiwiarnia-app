@@ -89,11 +89,23 @@ const ItemsPage = () => {
             if(!res.ok) throw new Error("Failed to increment item.");
             const data = await res.json();
 
-            setItems((prevItems) =>
-                prevItems.map((item) =>
+            setItems((prevItems) => {
+                const updatedItems = prevItems.map((item) =>
                     item._id === id ? { ...item, ...data.item} : item
-                )
-            );
+                );
+
+                return [...updatedItems].sort((a, b) => {
+                    let valA = a[sortBy];
+                    let valB = b[sortBy];
+
+                    if(typeof valA === 'string') valA = valA.toLowerCase();
+                    if(typeof valB === 'string') valB = valB.toLowerCase();
+
+                    if(valA < valB) return sortOrder === 'asc' ? -1 : 1;
+                    if(valA > valB) return sortOrder === 'asc' ? 1 : -1;
+                    return 0;
+                });
+            });
         } catch (err) {
             console.log(err);
         }
@@ -109,11 +121,23 @@ const ItemsPage = () => {
             const data = await res.json();
 
             if(data.item) {
-                setItems((prevItems) =>
-                    prevItems.map((item) =>
-                        item._id === id ? { ...item, ...data.item} : item
-                    )
+                setItems((prevItems) => {
+                const updatedItems = prevItems.map((item) =>
+                    item._id === id ? { ...item, ...data.item} : item
                 );
+
+                return [...updatedItems].sort((a, b) => {
+                    let valA = a[sortBy];
+                    let valB = b[sortBy];
+
+                    if(typeof valA === 'string') valA = valA.toLowerCase();
+                    if(typeof valB === 'string') valB = valB.toLowerCase();
+
+                    if(valA < valB) return sortOrder === 'asc' ? -1 : 1;
+                    if(valA > valB) return sortOrder === 'asc' ? 1 : -1;
+                    return 0;
+                });
+            });
             } else {
                 setItems((prevItems) =>
                     prevItems.filter((item) => item._id !== id)
